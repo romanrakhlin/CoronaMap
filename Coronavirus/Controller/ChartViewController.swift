@@ -1,3 +1,4 @@
+
 //
 //  ChartViewController.swift
 //  Coronavirus
@@ -7,24 +8,59 @@
 //
 
 import UIKit
+import Charts
+import Alamofire
 
-class ChartViewController: UIViewController {
+class ChartViewController: UIViewController, ChartViewDelegate {
 
+    @IBOutlet weak var chartView: BarChartView!
+    
+    var categories: [String] = []
+    var datadata: [Double] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        chartView.noDataText = "Загрузка..."
+        
+        AF.request("https://covid19-update-api.herokuapp.com/api/v1/cases/graphs").responseData { response in
+            switch response.result {
+            case .failure(let error):
+                print(error)
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let result = try decoder.decode(Chart.self, from: data)
+                    self.categories = result.graphs.totalCases.categories
+                    self.datadata = result.graphs.totalCases.data
+                    self.setChart(values: self.datadata.map{ Double($0) })
+                } catch { print(error) }
+            }
+        }
+        
+        chartView.delegate = self as! ChartViewDelegate
+        chartView.xAxis.valueFormatter = self
     }
     
+    func setChart(values: [Double]) {
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        let chartData = BarChartDataSet()
+        for (i, val) in values.enumerated(){
+            _ = chartData.addEntry(BarChartDataEntry(x: Double(i), y: val))
+        }
+        chartView.data = BarChartData(dataSet: chartData)
+        
+        chartData.colors = [UIColor.red]
+        chartData.barBorderColor = UIColor.lightGray
+        chartData.barBorderWidth = 1
+        chartData.barShadowColor = UIColor.black
+        chartView.legend.enabled = false
     }
-    */
+}
 
+extension ChartViewController: IAxisValueFormatter{
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        return categories[Int(value) % categories.count]
+    }
 }

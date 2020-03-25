@@ -7,3 +7,14 @@
 //
 
 import Foundation
+
+struct Attributes: Codable {
+    let OBJECTID: Int
+    let Country_Region: String
+    let Last_Update: Int64
+    let Lat: Double
+    let Long_: Double
+    let Confirmed: Int
+    let Deaths: Int
+    let Recovered: Int
+}

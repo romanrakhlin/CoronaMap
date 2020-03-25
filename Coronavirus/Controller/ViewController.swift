@@ -25,12 +25,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // setup mapview
+        // настраиваем mapview
         mapView.delegate = self
         mapView.showsUserLocation = true
         mapView.showsCompass = true
         
-        // request api
+        // api запрос
         let api = CoronavirusAPI()
         api.request(callback: { features, error in
             self.features = features
@@ -44,15 +44,12 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        addShadow(attachView: totalView)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+        addShadow(attachView: totalView) // делаем красивое totalview
     }
     
     @IBAction func tappedLocationButton(_ seder: UIButton) {
-        setLocation()
+        
+        setLocation() // показываем текущее местоположение
     }
     
     func pinTapCount() {
@@ -61,6 +58,7 @@ class ViewController: UIViewController {
         UserDefaults.standard.synchronize()
     }
     
+    // для totalview
     func addShadow(attachView: UIView) {
         let shadowView = UIView(frame: attachView.frame)
 
@@ -79,8 +77,9 @@ class ViewController: UIViewController {
         view.addSubview(shadowView)
         view.bringSubviewToFront(attachView)
     }
-
 }
+
+//MARK: - настройка floating panel
 
 extension ViewController: FloatingPanelControllerDelegate {
     
@@ -92,7 +91,7 @@ extension ViewController: FloatingPanelControllerDelegate {
         contentVC.feature = feature
         fpc.set(contentViewController: contentVC)
         fpc.isRemovalInteractionEnabled = true
-        fpc.surfaceView.cornerRadius = 20.5
+        fpc.surfaceView.cornerRadius = 20
         fpc.surfaceView.shadowHidden = false
         fpc.delegate = self
 
@@ -103,6 +102,8 @@ extension ViewController: FloatingPanelControllerDelegate {
         return PanelLayout()
     }
 }
+
+// MARK: - работа с location
 
 extension ViewController: CLLocationManagerDelegate {
     
@@ -151,10 +152,9 @@ extension ViewController: CLLocationManagerDelegate {
             locationManager?.stopUpdatingLocation()
         }
     }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-    }
 }
+
+// MARK: - настройка mapkit
 
 extension ViewController: MKMapViewDelegate {
     
@@ -169,8 +169,6 @@ extension ViewController: MKMapViewDelegate {
         circles = []
         
         for feature in features {
-//            let delta = mapView.region.span.longitudeDelta
-//            let distance = CalcUtils.relativeDistance(delta: delta, confirm: feature.attributes.Confirmed)
             let distance = CalcUtils.absoluteDistance(confirm: feature.attributes.Confirmed)
             let circle: MKCircle = MKCircle(center: feature.coordinate(), radius: CLLocationDistance(distance))
             circles.append(circle)
@@ -208,4 +206,3 @@ extension ViewController: MKMapViewDelegate {
 extension Notification.Name {
     static let tappedAnnotation = Notification.Name("tappedAnnotation")
 }
-

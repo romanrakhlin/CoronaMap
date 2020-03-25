@@ -1,0 +1,26 @@
+PODS:
+  - Alamofire (5.0.0)
+  - Charts (3.4.0):
+    - Charts/Core (= 3.4.0)
+  - Charts/Core (3.4.0)
+  - FloatingPanel (1.7.4)
+
+DEPENDENCIES:
+  - Alamofire
+  - Charts
+  - FloatingPanel
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - Charts
+    - FloatingPanel
+
+SPEC CHECKSUMS:
+  Alamofire: 58ff2bfb8daaacaa233d5c36e37b10a5248f59b1
+  Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
+  FloatingPanel: 3c9d0e30fe350e1613157557769d2ec97f76b96b
+
+PODFILE CHECKSUM: 5317ff9021bf3e33a6294dec3a3bcc3280ba6e2f
+
+COCOAPODS: 1.8.4

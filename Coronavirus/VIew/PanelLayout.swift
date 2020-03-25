@@ -10,6 +10,7 @@ import UIKit
 import FloatingPanel
 
 class PanelLayout: FloatingPanelLayout {
+    
     var initialPosition: FloatingPanelPosition {
         return .tip
     }

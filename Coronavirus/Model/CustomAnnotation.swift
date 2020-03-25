@@ -7,3 +7,9 @@
 //
 
 import Foundation
+import MapKit
+
+class CustomAnnotation: MKPointAnnotation {
+    var feature: Feature?
+    var circle: MKCircle?
+}

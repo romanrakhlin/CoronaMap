@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+struct FeatureServer: Codable {
+    let objectIdFieldName: String
+    let globalIdFieldName: String
+    let geometryType: String
+    let features: [Feature]
+}

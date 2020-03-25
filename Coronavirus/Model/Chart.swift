@@ -8,17 +8,16 @@
 
 import Foundation
 
-struct Chart {
-    let categories: String
-    let data: String
-    let graphs: [TotalCases] = []
+struct Chart: Decodable {
+    let total: Int
+    let graphs: TotalCases
 }
 
-struct TotalCases {
-    let totalCases: [Details] = []
+struct TotalCases: Decodable {
+    let totalCases: Details
 }
 
-struct Details {
-    let title: String
-    let details: String
+struct Details: Decodable {
+    let categories: [String]
+    let data: [Double]
 }
