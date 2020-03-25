@@ -4,7 +4,7 @@
 ![Swift](https://img.shields.io/badge/Swift-5-orange?logo=Swift&logoColor=white)
 [![License](https://img.shields.io/github/license/romarakhlin/CoronaMap)](https://github.com/romarakhlin/CoronaMap/blob/master/LICENSE)
 
-This app shows information about the virus for each country in the world, also separately you see the statistics on the charts.
+This app works with api and shows information about the virus for each country in the world, also separately you see the statistics on the charts.
 
 ## Screenshots
 
