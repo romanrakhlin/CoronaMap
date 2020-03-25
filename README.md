@@ -8,7 +8,7 @@ This app shows information about the virus for each country in the world, also s
 
 ## Screenshots
 
-![image](./img.png)
+![image](./image.png)
 
 ## License
 CoronaMap is available under the MIT license. See the LICENSE file for more info.
